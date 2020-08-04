@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release Asset Mktxt
-        id: upload-release-asset 
+        id: upload-release-asset-mktxt
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +39,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload Release Asset Mkdir
-        id: upload-release-asset 
+        id: upload-release-asset-mkdir
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
