@@ -28,22 +28,24 @@ func main() {
 		} else {
 			continue
 		}
-		if reader, err := os.Open(f.Name()); err == nil {
-			defer reader.Close()
-			im, err = decode(reader)
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "%s: %v\n", f.Name(), err)
-				continue
+		func() {
+			if reader, err := os.Open(f.Name()); err == nil {
+				defer reader.Close()
+				im, err = decode(reader)
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "%s: %v\n", f.Name(), err)
+					return
+				}
+				fileName := fmt.Sprintf("%s-%d.txt", strings.Split(f.Name(), ".")[0], im.Height)
+				fmt.Println(fileName)
+				if f, err := os.OpenFile(fileName, os.O_RDONLY|os.O_CREATE, 0666); err != nil {
+					defer f.Close()
+				}
+				count++
+			} else {
+				fmt.Printf("Impossible to open the file: %s, err:%#v\n", f.Name(), err)
 			}
-			fileName := fmt.Sprintf("%s-%d.txt", strings.Split(f.Name(), ".")[0], im.Height)
-			fmt.Println(fileName)
-			if f, err := os.OpenFile(fileName, os.O_RDONLY|os.O_CREATE, 0666); err != nil {
-				defer f.Close()
-			}
-			count++
-		} else {
-			fmt.Printf("Impossible to open the file: %s, err:%#v\n", f.Name(), err)
-		}
+		}()
 	}
 	fmt.Printf("完成，共创建%d个txt\n", count)
 	var ts string
