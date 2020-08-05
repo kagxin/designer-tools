@@ -7,7 +7,7 @@ on:
 name: Release
 jobs:
   run_build:
-    name: Run Test
+    name: Run Release
     runs-on: ubuntu-latest
     container: golang:1.14
 
